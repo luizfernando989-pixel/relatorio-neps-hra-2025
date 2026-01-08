@@ -1,1 +1,802 @@
 # relatorio-neps-hra-2025
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatório de Gestão 2025 - NEPS HRA</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #334155; display: flex; flex-direction: column; min-height: 100vh; }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+        /* Card Styling */
+        .card { 
+            background-color: white; 
+            border-radius: 0.5rem; 
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06); 
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease; 
+        }
+        .card:hover { 
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); 
+            border-color: #cbd5e1;
+        }
+
+        /* Navigation Tabs */
+        .nav-item { 
+            cursor: pointer; 
+            border-bottom: 3px solid transparent; 
+            transition: all 0.2s; 
+            color: #64748b;
+        }
+        .nav-item:hover { color: #0f766e; background-color: #f0fdfa; }
+        .nav-item.active { 
+            border-bottom-color: #0f766e; 
+            color: #0f766e; 
+            font-weight: 600; 
+            background-color: transparent;
+        }
+
+        /* Animations */
+        .animate-fade-in { animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Report Typography (ABNT Style) */
+        .report-section { font-family: 'Merriweather', serif; color: #1e293b; }
+        .report-section h2 { font-family: 'Inter', sans-serif; font-weight: 700; letter-spacing: -0.025em; }
+        .report-section h3 { 
+            font-family: 'Inter', sans-serif; 
+            color: #0f766e; 
+            font-size: 1.25rem; 
+            font-weight: 700; 
+            margin-top: 2.5rem; 
+            margin-bottom: 1rem; 
+            border-bottom: 2px solid #ccfbf1; 
+            padding-bottom: 0.5rem; 
+            display: inline-block;
+        }
+        .report-section h4 { 
+            font-family: 'Inter', sans-serif; 
+            color: #334155; 
+            font-size: 1.1rem; 
+            font-weight: 600; 
+            margin-top: 1.5rem; 
+            margin-bottom: 0.75rem; 
+        }
+        .report-section p { margin-bottom: 1.25rem; line-height: 1.8; text-align: justify; font-size: 0.95rem; }
+        .report-section ul { list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1.25rem; }
+        .report-section li { margin-bottom: 0.5rem; line-height: 1.6; }
+        
+        /* Citation Box Styling */
+        .citation-box { 
+            background-color: #f0fdfa; 
+            border-left: 4px solid #0d9488; 
+            padding: 1.25rem; 
+            margin: 1.5rem 2rem; 
+            font-style: italic; 
+            color: #334155; 
+            font-size: 0.9rem;
+            border-radius: 0 0.5rem 0.5rem 0;
+        }
+
+        /* Filter Buttons */
+        .filter-btn { transition: all 0.2s; background: white; }
+        .filter-btn.active { background-color: #0f766e; color: white; border-color: #0f766e; box-shadow: 0 4px 6px -1px rgba(15, 118, 110, 0.2); }
+        .filter-btn:hover:not(.active) { background-color: #f1f5f9; border-color: #cbd5e1; }
+        
+        /* Footer Disclaimer */
+        .footer-disclaimer {
+            font-size: 0.75rem;
+            color: #64748b;
+            text-align: center;
+            border-top: 1px solid #e2e8f0;
+            padding: 2rem 1.5rem;
+            background-color: white;
+            margin-top: auto;
+            line-height: 1.6;
+        }
+        .footer-link {
+            color: #0f766e;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s;
+            border-bottom: 1px dotted #0f766e;
+        }
+        .footer-link:hover { color: #115e59; border-bottom-style: solid; }
+
+        /* Logo Img Helper */
+        .logo-img { height: 100%; width: auto; object-fit: contain; }
+    </style>
+</head>
+<body>
+
+    <!-- 1. INSTITUTIONAL HEADER (Clean & Official - No SVGs) -->
+    <header class="bg-teal-700 text-white shadow-md z-20 flex-none h-24 sm:h-28">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col justify-center">
+            
+            <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
+                
+                <!-- Left: Gov/SES Logo Area + Titles -->
+                <div class="flex items-center gap-4 text-center sm:text-left">
+                    
+                    <!-- IMAGEM DO GOVERNO (Opcional - Coloque 'logo_governo.png' na pasta) -->
+                    <div class="h-16 w-16 hidden sm:flex items-center justify-center">
+                        <img src="logo_governo.png" 
+                             onerror="this.style.display='none';" 
+                             alt="Logo Governo" 
+                             class="logo-img bg-white rounded p-1">
+                    </div>
+
+                    <div>
+                        <p class="text-[10px] sm:text-xs font-medium text-teal-200 uppercase tracking-widest mb-1">Superintendência de Gestão do Trabalho e Educação na Saúde</p>
+                        <h1 class="text-xl sm:text-2xl font-bold tracking-tight leading-tight">HOSPITAL REGIONAL DO AGRESTE</h1>
+                        <div class="mt-2 inline-flex items-center bg-teal-800/50 px-3 py-1 rounded border border-teal-600/50">
+                            <!-- IMAGEM DO NEPS (Opcional - Coloque 'logo_neps.png' na pasta) -->
+                            <img src="logo_neps.png" 
+                                 class="h-5 w-5 mr-2 object-contain bg-white rounded-full p-0.5" 
+                                 onerror="this.style.display='none';">
+                            
+                            <p class="text-xs sm:text-sm font-semibold text-teal-50">Núcleo de Educação Permanente em Saúde</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: HRA Logo & Year -->
+                <div class="flex items-center gap-4">
+                    
+                    <!-- IMAGEM DO HRA (Opcional - Coloque 'logo_hra.png' na pasta) -->
+                    <div class="h-16 w-16 flex items-center justify-center">
+                        <img src="logo_hra.png" 
+                             onerror="this.style.display='none';" 
+                             alt="Logo HRA" 
+                             class="logo-img bg-white rounded-full p-1 shadow-md">
+                    </div>
+
+                    <div class="text-right hidden sm:block border-l border-teal-600 pl-4 ml-2">
+                        <p class="text-[10px] text-teal-300 uppercase font-semibold">Ano Base</p>
+                        <p class="text-2xl font-bold text-white leading-none">2025</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 2. NAVIGATION BAR -->
+    <div class="bg-white border-b border-slate-200 shadow-[0_2px_4px_-2px_rgba(0,0,0,0.05)] z-10 flex-none sticky top-0">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <nav class="flex space-x-6 sm:space-x-8 overflow-x-auto" id="nav-tabs">
+                <button onclick="switchTab('dashboard')" class="nav-item active py-4 text-sm whitespace-nowrap flex items-center" id="tab-dashboard">
+                    <i class="fa-solid fa-chart-pie mr-2 text-xs"></i>Visão Geral
+                </button>
+                <button onclick="switchTab('details')" class="nav-item py-4 text-sm whitespace-nowrap flex items-center" id="tab-details">
+                    <i class="fa-solid fa-users-viewfinder mr-2 text-xs"></i>Análise Detalhada
+                </button>
+                <button onclick="switchTab('report')" class="nav-item py-4 text-sm whitespace-nowrap flex items-center" id="tab-report">
+                    <i class="fa-solid fa-file-lines mr-2 text-xs"></i>Relatório de Gestão
+                </button>
+                <button onclick="switchTab('strategy')" class="nav-item py-4 text-sm whitespace-nowrap flex items-center" id="tab-strategy">
+                    <i class="fa-solid fa-chess-knight mr-2 text-xs"></i>Conclusão
+                </button>
+            </nav>
+        </div>
+    </div>
+
+    <!-- 3. MAIN CONTENT AREA -->
+    <div class="flex-1 overflow-auto bg-slate-50 relative p-4 sm:p-6 lg:p-8">
+        <main class="max-w-7xl mx-auto">
+            
+            <!-- SECTION 1: DASHBOARD OVERVIEW -->
+            <div id="content-dashboard" class="animate-fade-in space-y-6">
+                
+                <!-- KPI Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- KPI 1 -->
+                    <div class="card p-6 border-t-4 border-t-teal-500 hover:-translate-y-1">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Total de Participações</p>
+                                <h3 class="text-3xl font-bold text-slate-800 mt-1">3.932</h3>
+                            </div>
+                            <div class="bg-teal-50 text-teal-600 h-10 w-10 rounded-full flex items-center justify-center">
+                                <i class="fa-solid fa-users text-lg"></i>
+                            </div>
+                        </div>
+                        <div class="flex items-center text-xs font-medium text-emerald-600 bg-emerald-50 w-fit px-2 py-1 rounded">
+                            <i class="fa-solid fa-arrow-trend-up mr-1"></i>
+                            <span>Alta Cobertura</span>
+                        </div>
+                    </div>
+
+                    <!-- KPI 2 -->
+                    <div class="card p-6 border-t-4 border-t-blue-500 hover:-translate-y-1">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Eventos Realizados</p>
+                                <h3 class="text-3xl font-bold text-slate-800 mt-1">121</h3>
+                            </div>
+                            <div class="bg-blue-50 text-blue-600 h-10 w-10 rounded-full flex items-center justify-center">
+                                <i class="fa-solid fa-calendar-check text-lg"></i>
+                            </div>
+                        </div>
+                        <div class="flex items-center text-xs font-medium text-slate-500">
+                            <span class="text-blue-600 font-bold mr-1">~10</span> eventos/mês (média)
+                        </div>
+                    </div>
+
+                    <!-- KPI 3 -->
+                    <div class="card p-6 border-t-4 border-t-indigo-500 hover:-translate-y-1">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Proatividade</p>
+                                <h3 class="text-3xl font-bold text-slate-800 mt-1">50,6%</h3>
+                            </div>
+                            <div class="bg-indigo-50 text-indigo-600 h-10 w-10 rounded-full flex items-center justify-center">
+                                <i class="fa-solid fa-lightbulb text-lg"></i>
+                            </div>
+                        </div>
+                        <div class="w-full bg-slate-100 rounded-full h-1.5 mt-2">
+                            <div class="bg-indigo-500 h-1.5 rounded-full" style="width: 50.6%"></div>
+                        </div>
+                    </div>
+
+                    <!-- KPI 4 -->
+                    <div class="card p-6 border-t-4 border-t-rose-500 hover:-translate-y-1">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Setores Alcançados</p>
+                                <h3 class="text-3xl font-bold text-slate-800 mt-1">62</h3>
+                            </div>
+                            <div class="bg-rose-50 text-rose-600 h-10 w-10 rounded-full flex items-center justify-center">
+                                <i class="fa-solid fa-hospital text-lg"></i>
+                            </div>
+                        </div>
+                        <div class="flex items-center text-xs font-medium text-rose-600">
+                            <i class="fa-solid fa-check-circle mr-1"></i> Capilaridade Máxima
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Charts Row -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <!-- Timeline Chart (Big) -->
+                    <div class="card p-6 lg:col-span-2">
+                        <div class="flex justify-between items-center mb-6">
+                            <h4 class="text-lg font-bold text-slate-800 flex items-center">
+                                <span class="w-1 h-6 bg-teal-500 rounded mr-3"></span>
+                                Evolução Temporal
+                            </h4>
+                            <span class="text-xs font-medium text-slate-400 bg-slate-100 px-2 py-1 rounded">Jan - Dez 2025</span>
+                        </div>
+                        <div class="h-64">
+                            <canvas id="timelineChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Location Chart (Small) -->
+                    <div class="card p-6">
+                        <h4 class="text-lg font-bold text-slate-800 mb-6 flex items-center">
+                            <span class="w-1 h-6 bg-blue-500 rounded mr-3"></span>
+                            Local de Realização
+                        </h4>
+                        <div class="h-48 flex items-center justify-center relative">
+                            <canvas id="locationChart"></canvas>
+                        </div>
+                        <div class="mt-4 text-center">
+                            <p class="text-sm text-slate-600">Foco em <span class="font-bold text-teal-600">Educação em Serviço</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 2: DETAILED ANALYSIS -->
+            <div id="content-details" class="hidden animate-fade-in space-y-6">
+                
+                <!-- SEGMENTATION CONTROLS -->
+                <div class="card p-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <div class="flex items-center text-slate-500 text-sm font-semibold uppercase tracking-wide">
+                        <i class="fa-solid fa-filter mr-2 text-teal-600"></i> Filtros de Análise
+                    </div>
+                    <div class="flex flex-wrap gap-2 justify-center">
+                        <button onclick="updateDetails('global')" id="btn-global" class="filter-btn active px-4 py-2 rounded-full border border-slate-300 text-xs font-bold uppercase tracking-wide">Global 2025</button>
+                        <button onclick="updateDetails('inloco')" id="btn-inloco" class="filter-btn px-4 py-2 rounded-full border border-slate-300 text-xs font-bold uppercase tracking-wide">In Loco</button>
+                        <button onclick="updateDetails('auditorio')" id="btn-auditorio" class="filter-btn px-4 py-2 rounded-full border border-slate-300 text-xs font-bold uppercase tracking-wide">Auditório</button>
+                        <button onclick="updateDetails('julho')" id="btn-julho" class="filter-btn px-4 py-2 rounded-full border border-teal-200 text-xs font-bold uppercase tracking-wide text-teal-700 bg-teal-50 hover:bg-teal-100">★ Julho</button>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    
+                    <!-- Professional Profile -->
+                    <div class="card p-6 lg:col-span-1">
+                        <h4 class="text-base font-bold text-slate-700 mb-1">Adesão por Categoria</h4>
+                        <p class="text-xs text-slate-400 mb-4">Quem mais participa?</p>
+                        <div class="h-60">
+                            <canvas id="professionChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Dynamic Activity Types -->
+                    <div class="card p-6 lg:col-span-1">
+                        <h4 class="text-base font-bold text-slate-700 mb-1">Metodologias</h4>
+                        <p class="text-xs text-slate-400 mb-4" id="method-subtitle">Visão Global</p>
+                        <div class="h-60 flex justify-center">
+                            <canvas id="typeChart"></canvas>
+                        </div>
+                    </div>
+
+                        <!-- Proactivity Chart -->
+                        <div class="card p-6 lg:col-span-1">
+                        <h4 class="text-base font-bold text-slate-700 mb-1">Planejamento</h4>
+                        <p class="text-xs text-slate-400 mb-4" id="proactivity-subtitle">Proativo vs Reativo</p>
+                        <div class="h-60 flex justify-center relative">
+                            <canvas id="proactivityChart"></canvas>
+                            <div class="absolute inset-0 flex items-center justify-center pointer-events-none flex-col">
+                                <span class="text-3xl font-bold text-slate-700 block tracking-tighter" id="proactive-percent">50%</span>
+                                <span class="text-[10px] font-bold text-slate-400 uppercase">Proativo</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Top Sectors & Themes Table -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <!-- Sectors Table -->
+                    <div class="card overflow-hidden border-0 shadow-md">
+                        <div class="px-6 py-4 bg-gradient-to-r from-slate-50 to-white border-b border-slate-100 flex justify-between items-center">
+                            <h4 class="font-bold text-slate-700">Top 5 Setores</h4>
+                            <span class="text-[10px] font-bold bg-slate-200 text-slate-600 px-2 py-1 rounded uppercase tracking-wider">Total: 62</span>
+                        </div>
+                        <div class="p-0">
+                            <table class="w-full text-sm text-left">
+                                <thead class="text-xs text-slate-400 uppercase bg-slate-50 border-b border-slate-100">
+                                    <tr>
+                                        <th class="px-6 py-3 font-semibold">Setor</th>
+                                        <th class="px-6 py-3 text-right font-semibold">Participações</th>
+                                        <th class="px-6 py-3 text-right font-semibold">%</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-50">
+                                    <tr class="hover:bg-teal-50 transition-colors group">
+                                        <td class="px-6 py-3 font-medium text-slate-700 group-hover:text-teal-700">CC e CME</td>
+                                        <td class="px-6 py-3 text-right font-bold text-slate-800">429</td>
+                                        <td class="px-6 py-3 text-right text-slate-400">10,9%</td>
+                                    </tr>
+                                    <tr class="hover:bg-teal-50 transition-colors group">
+                                        <td class="px-6 py-3 font-medium text-slate-700 group-hover:text-teal-700">Sala Vermelha</td>
+                                        <td class="px-6 py-3 text-right font-bold text-slate-800">363</td>
+                                        <td class="px-6 py-3 text-right text-slate-400">9,2%</td>
+                                    </tr>
+                                    <tr class="hover:bg-teal-50 transition-colors group">
+                                        <td class="px-6 py-3 font-medium text-slate-700 group-hover:text-teal-700">Ortopedia</td>
+                                        <td class="px-6 py-3 text-right font-bold text-slate-800">314</td>
+                                        <td class="px-6 py-3 text-right text-slate-400">8,0%</td>
+                                    </tr>
+                                    <tr class="hover:bg-teal-50 transition-colors group">
+                                        <td class="px-6 py-3 font-medium text-slate-700 group-hover:text-teal-700">Posto I</td>
+                                        <td class="px-6 py-3 text-right font-bold text-slate-800">255</td>
+                                        <td class="px-6 py-3 text-right text-slate-400">6,5%</td>
+                                    </tr>
+                                    <tr class="hover:bg-teal-50 transition-colors group">
+                                        <td class="px-6 py-3 font-medium text-slate-700 group-hover:text-teal-700">UTI</td>
+                                        <td class="px-6 py-3 text-right font-bold text-slate-800">229</td>
+                                        <td class="px-6 py-3 text-right text-slate-400">5,8%</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                        <!-- Themes List -->
+                        <div class="card p-6 bg-slate-800 text-white border-0 shadow-lg relative overflow-hidden">
+                        <!-- Decorative bg element -->
+                        <div class="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-teal-500 rounded-full opacity-20 blur-xl"></div>
+                        
+                        <h4 class="text-lg font-bold mb-6 border-b border-slate-700 pb-4 relative z-10">Temáticas de Impacto</h4>
+                        <div class="space-y-5 relative z-10">
+                            <div class="group">
+                                <div class="flex justify-between text-sm mb-2">
+                                    <span class="font-medium text-slate-200">Acidente de Trabalho (Fluxograma)</span>
+                                    <span class="text-teal-400 font-bold">756</span>
+                                </div>
+                                <div class="w-full bg-slate-700/50 rounded-full h-1.5">
+                                    <div class="bg-teal-400 h-1.5 rounded-full shadow-[0_0_10px_rgba(45,212,191,0.5)]" style="width: 100%"></div>
+                                </div>
+                            </div>
+                            <div class="group">
+                                <div class="flex justify-between text-sm mb-2">
+                                    <span class="font-medium text-slate-200">Manejo de Bomba Infusão</span>
+                                    <span class="text-teal-400 font-bold">340</span>
+                                </div>
+                                <div class="w-full bg-slate-700/50 rounded-full h-1.5">
+                                    <div class="bg-teal-400 h-1.5 rounded-full opacity-80" style="width: 45%"></div>
+                                </div>
+                            </div>
+                            <div class="group">
+                                <div class="flex justify-between text-sm mb-2">
+                                    <span class="font-medium text-slate-200">Adm. Segura de Medicamentos</span>
+                                    <span class="text-teal-400 font-bold">241</span>
+                                </div>
+                                <div class="w-full bg-slate-700/50 rounded-full h-1.5">
+                                    <div class="bg-teal-400 h-1.5 rounded-full opacity-60" style="width: 32%"></div>
+                                </div>
+                            </div>
+                            <div class="group">
+                                <div class="flex justify-between text-sm mb-2">
+                                    <span class="font-medium text-slate-200">Prevenção de Quedas</span>
+                                    <span class="text-teal-400 font-bold">123</span>
+                                </div>
+                                <div class="w-full bg-slate-700/50 rounded-full h-1.5">
+                                    <div class="bg-teal-400 h-1.5 rounded-full opacity-40" style="width: 16%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 3: NARRATIVE REPORT (ABNT) -->
+            <div id="content-report" class="hidden animate-fade-in">
+                <div class="card p-8 md:p-12 max-w-4xl mx-auto report-section bg-white border border-slate-200 shadow-xl">
+                    
+                    <div class="text-center mb-12 border-b border-slate-100 pb-8">
+                        <p class="text-xs uppercase tracking-[0.2em] text-slate-400 mb-2">Hospital Regional do Agreste</p>
+                        <h2 class="text-3xl md:text-4xl font-bold text-slate-800 mb-4">Relatório de Gestão 2025</h2>
+                        <div class="inline-block bg-teal-50 px-6 py-2 rounded-full">
+                            <p class="text-lg text-teal-700 font-bold italic">Núcleo de Educação Permanente em Saúde</p>
+                        </div>
+                    </div>
+
+                    <div class="prose prose-slate max-w-none text-slate-600">
+                        <h3>1.0 Introdução: Contexto e Objetivos</h3>
+                        <p>
+                            O presente relatório consolida os dados das atividades educativas realizadas pelo <strong>Núcleo de Educação Permanente em Saúde (NEPS)</strong> do Hospital Regional do Agreste (HRA) durante o exercício de 2025. Alinhado às diretrizes da <strong>Política Nacional de Educação Permanente em Saúde (PNEPS)</strong>, este documento visa não apenas quantificar ações, mas qualificar o impacto da educação no processo de trabalho em saúde.
+                        </p>
+
+                        <h3>2.0 Panorama Geral: Indicadores de Desempenho</h3>
+                        <p>
+                            O ano base de 2025 caracterizou-se por uma expansão significativa da capilaridade das ações educativas. Os dados consolidados evidenciam um esforço institucional robusto:
+                        </p>
+                        
+                        <!-- Report Summary Grid -->
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 my-8 not-prose">
+                            <div class="bg-slate-50 p-4 rounded text-center border border-slate-100">
+                                <strong class="block text-2xl text-slate-800 font-bold">121</strong>
+                                <span class="text-xs text-slate-500 uppercase tracking-wide">Eventos Únicos</span>
+                            </div>
+                            <div class="bg-slate-50 p-4 rounded text-center border border-slate-100">
+                                <strong class="block text-2xl text-teal-700 font-bold">3.932</strong>
+                                <span class="text-xs text-slate-500 uppercase tracking-wide">Participações</span>
+                            </div>
+                            <div class="bg-slate-50 p-4 rounded text-center border border-slate-100">
+                                <strong class="block text-2xl text-slate-800 font-bold">50,6%</strong>
+                                <span class="text-xs text-slate-500 uppercase tracking-wide">Proatividade</span>
+                            </div>
+                            <div class="bg-slate-50 p-4 rounded text-center border border-slate-100">
+                                <strong class="block text-2xl text-slate-800 font-bold">62</strong>
+                                <span class="text-xs text-slate-500 uppercase tracking-wide">Setores</span>
+                            </div>
+                        </div>
+
+                        <h3>3.0 Análise Cronológica e Sazonalidade</h3>
+                        <p>
+                            A distribuição temporal das atividades demonstra constância, com picos estratégicos de intervenção. Destaca-se o mês de <strong>Julho</strong> (844 participações), correspondendo a um ciclo intensivo de protocolos assistenciais, sugerindo um aproveitamento de janelas de oportunidade para treinamentos em massa.
+                        </p>
+
+                        <h3>4.0 Perfil do Público e Capilaridade</h3>
+                        <p>
+                            A análise demográfica reforça o foco na assistência direta. A Enfermagem (Técnicos e Enfermeiros) compõe a base majoritária do público-alvo, totalizando mais de 2.400 participações.
+                        </p>
+                        <p>
+                            A capilaridade setorial atingiu áreas críticas como Centro Cirúrgico, CME e Sala Vermelha, demonstrando que a educação permanente está inserida nos locais de maior complexidade e risco assistencial.
+                        </p>
+
+                        <h3>5.0 Metodologia e Espacialidade</h3>
+                        <p>
+                            A variável "Local de Realização" apresenta o dado mais relevante deste ciclo: <strong>61,8% das ações ocorreram "In Loco"</strong>. Isso reflete uma ruptura com o modelo tradicional de sala de aula (auditório), levando o conhecimento para o cenário da prática.
+                        </p>
+
+                        <h3>6.0 Planejamento: Proatividade vs. Reatividade</h3>
+                        <p>
+                            O equilíbrio entre ações proativas (50,6%) e reativas (49,4%) indica um NEPS que consegue executar seu planejamento estratégico anual sem perder a agilidade necessária para responder às demandas emergentes da assistência.
+                        </p>
+
+                        <!-- ANALYTICAL SECTION -->
+                        <h3>8.0 Análise Crítica: Desafios e Potencialidades</h3>
+                        <p>
+                            À luz dos referenciais teóricos e normativos da área, apresenta-se uma avaliação qualitativa do programa.
+                        </p>
+
+                        <h4>8.1 Potencialidades: A Consolidação da Andragogia</h4>
+                        <p>
+                            A predominância de atividades "In Loco" valida a aplicação dos princípios andragógicos no HRA. Adultos aprendem melhor quando o conhecimento é contextualizado aos seus problemas reais.
+                        </p>
+                        <div class="citation-box">
+                            "Os adultos tornam-se prontos para aprender aquelas coisas que precisam saber e ser capazes de fazer para lidar efetivamente com as situações da vida real." (KNOWLES; HOLTON III; SWANSON, 2015, p. 45).
+                        </div>
+
+                        <h4>8.2 Desafios: A Superação da Lógica Reativa</h4>
+                        <p>
+                            Embora a agilidade seja positiva, a alta taxa de demandas reativas (quase 50%) alerta para a necessidade de transformar a educação permanente em ferramenta de gestão preventiva, e não apenas corretiva, conforme preconiza a PNEPS (BRASIL, 2018).
+                        </p>
+
+                        <h4>8.3 Pontos de Melhoria: Indicadores de Impacto</h4>
+                        <p>
+                            O principal gap identificado é a ausência de avaliação de impacto clínico. O monitoramento atual é focado em processo (presença). É imperativo avançar para indicadores de resultado.
+                        </p>
+                        <div class="citation-box">
+                            "O monitoramento e a avaliação devem superar a lógica burocrática e quantitativa [...] buscando compreender os efeitos produzidos pelas ações educativas na qualidade da atenção à saúde." (BRASIL, 2022, p. 32).
+                        </div>
+
+                        <div class="mt-12 pt-8 border-t border-slate-200">
+                            <h4 class="text-sm font-bold text-slate-400 uppercase tracking-widest mb-4">Referências Bibliográficas</h4>
+                            <div class="text-xs text-slate-500 space-y-2">
+                                <p class="pl-8 -indent-8">BRASIL. Ministério da Saúde. <strong>Orientações para Monitoramento e Avaliação da Política Nacional de Educação Permanente em Saúde</strong>. Brasília: Ministério da Saúde, 2022.</p>
+                                <p class="pl-8 -indent-8">BRASIL. Ministério da Saúde. <strong>Política Nacional de Educação Permanente em Saúde</strong>: o que se tem produzido para o seu fortalecimento?. 1. ed. rev. Brasília: Ministério da Saúde, 2018.</p>
+                                <p class="pl-8 -indent-8">KNOWLES, M. S.; HOLTON III, E. F.; SWANSON, R. A. <strong>The Adult Learner</strong>: The definitive classic in adult education and human resource development. 8. ed. Abingdon: Routledge, 2015.</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 4: STRATEGY & CONCLUSION -->
+            <div id="content-strategy" class="hidden animate-fade-in space-y-6">
+                <div class="bg-white border-l-4 border-teal-500 rounded-r-xl p-8 shadow-sm">
+                    <h3 class="text-2xl font-bold text-teal-800 mb-4">Conclusão Estratégica</h3>
+                    <p class="text-slate-600 leading-relaxed text-lg">
+                        O ano de 2025 consolidou o <strong>Núcleo de Educação Permanente em Saúde</strong> como um vetor estratégico dentro do HRA. A transição para um modelo 
+                        <strong class="text-teal-700 font-bold">In Loco (61,8%)</strong> demonstrou maturidade institucional, levando o conhecimento 
+                        até o leito do paciente. O setor provou ser um parceiro vital para a qualidade assistencial.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="card p-8 text-center border-t-4 border-yellow-400 hover:shadow-lg transition-all">
+                        <div class="w-16 h-16 bg-yellow-50 text-yellow-500 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
+                            <i class="fa-solid fa-chart-line"></i>
+                        </div>
+                        <h5 class="font-bold text-slate-800 mb-2">Avaliação de Impacto</h5>
+                        <p class="text-sm text-slate-500">Migrar de indicadores de "presença" para indicadores de "mudança de comportamento".</p>
+                    </div>
+                    <div class="card p-8 text-center border-t-4 border-purple-400 hover:shadow-lg transition-all">
+                        <div class="w-16 h-16 bg-purple-50 text-purple-500 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
+                            <i class="fa-solid fa-vr-cardboard"></i>
+                        </div>
+                        <h5 class="font-bold text-slate-800 mb-2">Tecnologia</h5>
+                        <p class="text-sm text-slate-500">Investir em simulação realística e plataformas híbridas para ampliar o alcance.</p>
+                    </div>
+                    <div class="card p-8 text-center border-t-4 border-emerald-400 hover:shadow-lg transition-all">
+                        <div class="w-16 h-16 bg-emerald-50 text-emerald-500 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
+                            <i class="fa-solid fa-user-graduate"></i>
+                        </div>
+                        <h5 class="font-bold text-slate-800 mb-2">Preceptoria</h5>
+                        <p class="text-sm text-slate-500">Fortalecer o elo com as residências para qualificar a formação em serviço.</p>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- FOOTER DISCLAIMER (FINAL WITH AUTHORSHIP & METHODOLOGY) -->
+    <footer class="footer-disclaimer">
+        <div class="max-w-4xl mx-auto">
+            <!-- Author Block -->
+            <div class="mb-8 pb-6 border-b border-slate-100">
+                <p class="text-[10px] uppercase tracking-widest text-slate-400 mb-2">Relatório produzido por</p>
+                <p class="text-base font-bold text-slate-800 mb-1">Luiz Fernando de Andrade Silva</p>
+                <p class="text-xs uppercase tracking-wider text-teal-600 font-semibold">Coordenador de Ensino e Pesquisa do NEPS/HRA</p>
+            </div>
+
+            <!-- Methodology & Disclaimer -->
+            <div class="text-justify text-slate-600 mb-4 space-y-3">
+                <p>
+                    <strong>Declaração de Metodologia:</strong> A tabulação dos dados foi produzida no <span class="font-medium text-slate-700">Google Sheets</span>, através das atas de participação. O monitoramento dos dados foi realizado de forma contínua através da ferramenta de Business Intelligence (B.I) <a href="https://lookerstudio.google.com/u/0/reporting/0098793b-7052-41c6-a2a5-3e68b38105a9/page/page_12345/edit" target="_blank" class="footer-link">Looker Studio</a>.
+                </p>
+                <p>
+                    Este relatório narrativo foi elaborado a partir da ferramenta <span class="text-teal-600 font-semibold">Google Gemini</span> (Canvas), com a concorrência das inteligências artificiais <span class="text-teal-600 font-medium">Perplexity AI</span> e <span class="text-teal-600 font-medium">NotebookLM</span>. As IAs foram utilizadas exclusivamente para busca de literatura para fundamentação teórica e auxílio na interpretação dos dados brutos. Todas as análises, conclusões e recomendações foram curadas, validadas e revisadas pela <strong>Coordenação do NEPS/HRA</strong>.
+                </p>
+            </div>
+            
+            <p class="text-[10px] text-slate-300 border-t border-slate-100 pt-4 mt-6">
+                © 2026 Hospital Regional do Agreste - Núcleo de Educação Permanente em Saúde. Todos os direitos reservados.
+            </p>
+        </div>
+    </footer>
+
+    <!-- Scripts (Charts & Logic) -->
+    <script>
+        // --- DATASETS ---
+        const segments = {
+            'global': {
+                subtitle: "Visão Global do Ano",
+                methods: [32.7, 30.2, 28.6, 5.2, 3.2],
+                proactivity: [50.6, 49.4],
+                proactiveLabel: "50.6%"
+            },
+            'inloco': {
+                subtitle: "Segmento: Atividades In Loco",
+                methods: [40.7, 9.7, 40.6, 5.6, 3.2],
+                proactivity: [67.9, 32.1],
+                proactiveLabel: "67.9%"
+            },
+            'auditorio': {
+                subtitle: "Segmento: Atividades em Auditório",
+                methods: [23.0, 60.3, 10.4, 5.3, 0.9],
+                proactivity: [57.6, 42.4],
+                proactiveLabel: "57.6%"
+            },
+            'julho': {
+                subtitle: "Mês de Referência: Julho (Pico)",
+                methods: [90.4, 2.7, 6.8, 0, 0],
+                proactivity: [94.4, 5.6],
+                proactiveLabel: "94.4%"
+            },
+            'agosto': {
+                subtitle: "Mês de Referência: Agosto",
+                methods: [2.4, 24.8, 72.7, 0, 0],
+                proactivity: [50, 50],
+                proactiveLabel: "50.0%"
+            }
+        };
+
+        // --- NAVIGATION LOGIC ---
+        function switchTab(tabId) {
+            ['dashboard', 'details', 'report', 'strategy'].forEach(id => {
+                document.getElementById(`content-${id}`).classList.add('hidden');
+                document.getElementById(`tab-${id}`).classList.remove('active');
+            });
+            document.getElementById(`content-${tabId}`).classList.remove('hidden');
+            document.getElementById(`tab-${tabId}`).classList.add('active');
+        }
+
+        // --- SEGMENTATION LOGIC ---
+        let typeChartInstance = null;
+        let proactivityChartInstance = null;
+
+        function updateDetails(segmentKey) {
+            const data = segments[segmentKey];
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`btn-${segmentKey}`).classList.add('active');
+            
+            document.getElementById('method-subtitle').textContent = data.subtitle;
+            document.getElementById('proactivity-subtitle').textContent = "Taxa de Proatividade: " + data.proactiveLabel;
+            document.getElementById('proactive-percent').textContent = data.proactiveLabel;
+
+            typeChartInstance.data.datasets[0].data = data.methods;
+            typeChartInstance.update();
+
+            proactivityChartInstance.data.datasets[0].data = data.proactivity;
+            const isHigh = data.proactivity[0] > 60;
+            proactivityChartInstance.data.datasets[0].backgroundColor = isHigh 
+                ? ['#0f766e', '#cbd5e1'] // Teal-700
+                : ['#3b82f6', '#cbd5e1']; // Blue
+            proactivityChartInstance.update();
+        }
+
+        // --- CHART INIT ---
+        Chart.defaults.font.family = "'Inter', sans-serif";
+        Chart.defaults.color = '#64748b';
+        Chart.defaults.scale.grid.color = '#f1f5f9';
+
+        window.onload = function() {
+            // 1. Timeline Chart
+            new Chart(document.getElementById('timelineChart'), {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                    datasets: [{
+                        label: 'Participações',
+                        data: [298, 175, 102, 258, 304, 197, 844, 447, 312, 451, 350, 194],
+                        borderColor: '#0d9488', // Teal-600
+                        backgroundColor: 'rgba(13, 148, 136, 0.05)',
+                        borderWidth: 2,
+                        pointBackgroundColor: '#ffffff',
+                        pointBorderColor: '#0d9488',
+                        pointRadius: 4,
+                        pointHoverRadius: 6,
+                        fill: true,
+                        tension: 0.3
+                    }]
+                },
+                options: { 
+                    responsive: true, 
+                    maintainAspectRatio: false, 
+                    plugins: { legend: { display: false } }, 
+                    scales: { 
+                        y: { beginAtZero: true, grid: { borderDash: [4, 4] } }, 
+                        x: { grid: { display: false } } 
+                    } 
+                }
+            });
+
+            // 2. Location Chart
+            new Chart(document.getElementById('locationChart'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['In Loco', 'Auditório', 'Virtual'],
+                    datasets: [{
+                        data: [61.8, 32.6, 5.6],
+                        backgroundColor: ['#14b8a6', '#3b82f6', '#cbd5e1'], // Teal, Blue, Gray
+                        borderWidth: 0,
+                        hoverOffset: 4
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, cutout: '75%', plugins: { legend: { display: false } } }
+            });
+
+            // 3. Profession Chart
+            new Chart(document.getElementById('professionChart'), {
+                type: 'bar',
+                data: {
+                    labels: ['Téc. Enfermagem', 'Enfermeiro', 'Fisioterapeuta', 'Nutricionista', 'Outros'],
+                    datasets: [{
+                        label: 'Participantes',
+                        data: [1365, 1050, 181, 178, 1158],
+                        backgroundColor: ['#0f766e', '#14b8a6', '#2dd4bf', '#5eead4', '#94a3b8'],
+                        borderRadius: 4,
+                        barThickness: 24
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true }, x: { grid: { display: false } } } }
+            });
+
+            // 4. Method Chart
+            typeChartInstance = new Chart(document.getElementById('typeChart'), {
+                type: 'polarArea',
+                data: {
+                    labels: ['Roda de Conversa', 'Palestra', 'Treinamento Prático', 'Oficina', 'Minicurso'],
+                    datasets: [{
+                        data: segments.global.methods,
+                        backgroundColor: [
+                            'rgba(20, 184, 166, 0.8)', // Teal
+                            'rgba(59, 130, 246, 0.8)', // Blue
+                            'rgba(99, 102, 241, 0.8)', // Indigo
+                            'rgba(244, 63, 94, 0.8)',  // Rose
+                            'rgba(245, 158, 11, 0.8)'  // Amber
+                        ],
+                        borderWidth: 0
+                    }]
+                },
+                options: { 
+                    responsive: true, 
+                    maintainAspectRatio: false, 
+                    plugins: { 
+                        legend: { position: 'bottom', labels: { boxWidth: 8, usePointStyle: true, font: {size: 10} } } 
+                    }, 
+                    scales: { r: { ticks: { display: false }, grid: { color: '#e2e8f0' } } } 
+                }
+            });
+
+            // 5. Proactivity Chart
+            proactivityChartInstance = new Chart(document.getElementById('proactivityChart'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['Proativa', 'Reativa'],
+                    datasets: [{
+                        data: segments.global.proactivity,
+                        backgroundColor: ['#3b82f6', '#e2e8f0'],
+                        borderWidth: 0,
+                        hoverOffset: 4
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, cutout: '80%', plugins: { legend: { display: false } } }
+            });
+        };
+    </script>
+</body>
+</html>
